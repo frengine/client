@@ -11,23 +11,23 @@
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
       >
-        <span class="mr-2">Latest Release</span>
+        <span class="mr-2">Login</span>
       </v-btn>
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <ShaderTest/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import ShaderTest from './components/ShaderTest'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ShaderTest
   },
   data () {
     return {
