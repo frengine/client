@@ -7,9 +7,10 @@
       </v-flex>
       <v-flex xs12 sm6 mb-5>
         <h2>Fragment shader</h2>
-        <v-btn color="info" @click="randomColor()">random color</v-btn>
-        <v-btn color="info" @click="shader()">run shader</v-btn>
-          <textarea id="text-inp" width="" height="200">
+        <v-flex xs12 mb-1>
+          <v-btn color="info" @click="randomColor()">random color</v-btn> or start typing
+        </v-flex>
+          <textarea id="text-inp" width="" height="200" v-on:keyup="shader()">
 void main(void) {
   gl_FragColor = vec4(gl_FragCoord.x / 640.0, gl_FragCoord.y / 480.0, 0, 1);
 }
@@ -66,14 +67,18 @@ void main(void) {
         this.gl.shaderSource(fragmentShader, fragCode);
         this.gl.compileShader(fragmentShader);
 
+        var success = this.gl.getShaderParameter(fragmentShader, this.gl.COMPILE_STATUS);
+        if (!success) { // If the shader is wrong we 
+          this.gl.clearColor(1.0, 0.0, 1.0, 1.0);
+          this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+          return
+        }
 
         var program = this.gl.createProgram();
         this.gl.attachShader(program, vertexShader);
         this.gl.attachShader(program, fragmentShader);
         this.gl.linkProgram(program);	
         this.gl.useProgram(program);
-
-
 
         var buffer = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
